@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { OctagonAlertIcon } from "lucide-react";
+import { FaGoogle, FaGithub } from "react-icons/fa";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -48,11 +49,33 @@ export const SignInView = () => {
       {
         email: data.email,
         password: data.password,
+        callbackURL: "/",
       },
       {
         onSuccess: () => {
           setPending(false);
           router.push("/");
+        },
+        onError: ({ error }) => {
+          setPending(false);
+          setError(error.message);
+        },
+      }
+    );
+  };
+
+  const onSocial = (provider: "google" | "github") => {
+    setError(null);
+    setPending(true);
+
+    authClient.signIn.social(
+      {
+        provider: provider,
+        callbackURL: "/",
+      },
+      {
+        onSuccess: () => {
+          setPending(false);
         },
         onError: ({ error }) => {
           setPending(false);
@@ -131,17 +154,21 @@ export const SignInView = () => {
                   <Button
                     variant={"outline"}
                     type="button"
+                    onClick={() => onSocial("google")}
                     disabled={pending}
                     className="w-full"
                   >
+                    <FaGoogle />
                     Google
                   </Button>
                   <Button
                     variant={"outline"}
                     type="button"
+                    onClick={() => onSocial("github")}
                     disabled={pending}
                     className="w-full"
                   >
+                    <FaGithub />
                     Github
                   </Button>
                 </div>
