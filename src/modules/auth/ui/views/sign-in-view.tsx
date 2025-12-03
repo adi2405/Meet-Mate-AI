@@ -174,7 +174,7 @@ export const SignInView = () => {
                 </div>
                 <div className="text-center text-sm">
                   Don&apos;t have an account?{" "}
-                  <Link href={"/sign-up"} className="underline">
+                  <Link href={"/sign-up"} className="underline text-primary">
                     Sign Up
                   </Link>
                 </div>
@@ -182,16 +182,22 @@ export const SignInView = () => {
             </form>
           </Form>
 
-          <div className="bg-radial from-indigo-600 to-indigo-950 relative hidden md:flex flex-col gap-y-4 items-center justify-center">
+          <div className="bg-radial from-sidebar-accent to-sidebar relative hidden md:flex flex-col gap-y-4 items-center justify-center">
             <img src="/logo.svg" alt="Logo" className="h-[92px] w-[92px]" />
-            <p className="text-2xl font-semibold text-white">Meet Mate AI</p>
+            <p className="text-2xl font-semibold text-white">MeetMate.AI</p>
           </div>
         </CardContent>
       </Card>
 
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-sm text-balance *:[a]:underline">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>
+        By clicking continue, you agree to our{" "}
+        <a href="#" className="text-primary">
+          Terms of Service
+        </a>{" "}
+        and{" "}
+        <a href="#" className="text-primary">
+          Privacy Policy
+        </a>
       </div>
     </div>
   );
