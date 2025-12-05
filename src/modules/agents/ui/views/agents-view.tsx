@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { columns } from "../components/columns";
-import { DataTable } from "../components/data-table";
+import { DataTable } from "@/components/custom/data-table";
 import { ErrorState } from "@/components/custom/error-state";
 import { EmptyState } from "@/components/custom/empty-state";
 import { LoadingState } from "@/components/custom/loading-state";
