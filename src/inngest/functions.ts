@@ -1,11 +1,24 @@
 import { inngest } from "./client";
-import { eq, inArray } from "drizzle-orm";
+import { eq, inArray, lt } from "drizzle-orm";
 import JSONL from "jsonl-parse-stringify";
 import { createAgent, gemini, TextMessage } from "@inngest/agent-kit";
 
 import { db } from "@/db";
-import { agents, meetings, user } from "@/db/schema";
+import { agents, meetings, processedMessages, user } from "@/db/schema";
 import { StreamTranscriptItem } from "@/modules/meetings/types";
+
+export const cleanupProcessedMessages = inngest.createFunction(
+  {
+    id: "cleanup-processed-messages",
+    name: "Cleanup Processed Messages",
+  },
+  { cron: "0 0 * * *" }, // Run daily at midnight
+  async ({ step }) => {
+    await step.run("delete-old-messages", async () => {
+      await db.delete(processedMessages);
+    });
+  }
+);
 
 const summarizer = createAgent({
   name: "summarizer",
@@ -31,7 +44,7 @@ const summarizer = createAgent({
     - Mention of integration with Z
   `.trim(),
   model: gemini({
-    model: "gemini-2.0-flash",
+    model: "gemini-2.5-flash-lite",
     apiKey: process.env.GEMINI_API_KEY,
   }),
 });
