@@ -15,6 +15,8 @@ import { MeetingGetOne } from "../../types";
 import { Badge } from "@/components/ui/badge";
 import { GeneratedAvatar } from "@/components/custom/generated-avatar";
 import { formatDuration } from "@/lib/utils";
+import { Transcript } from "./transcript";
+import { ChatProvider } from "./chat-provider";
 
 export const CompletedState = ({ data }: { data: MeetingGetOne }) => {
   return (
@@ -55,15 +57,6 @@ export const CompletedState = ({ data }: { data: MeetingGetOne }) => {
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
         </div>
-        <TabsContent value="recording">
-          <div className="bg-white rounded-lg border px-4 py-5">
-            <video
-              src={data.recordingUrl!}
-              className="w-full rounded-lg"
-              controls
-            />
-          </div>
-        </TabsContent>
         <TabsContent value="summary">
           <div className="bg-white rounded-lg border">
             <div className="px-6 py-5 gap-y-5 flex flex-col col-span-5">
@@ -143,6 +136,21 @@ export const CompletedState = ({ data }: { data: MeetingGetOne }) => {
               </div>
             </div>
           </div>
+        </TabsContent>
+        <TabsContent value="transcript">
+          <Transcript meetingId={data.id} />
+        </TabsContent>
+        <TabsContent value="recording">
+          <div className="bg-white rounded-lg border px-4 py-5">
+            <video
+              src={data.recordingUrl!}
+              className="w-full rounded-lg"
+              controls
+            />
+          </div>
+        </TabsContent>
+        <TabsContent value="chat">
+          <ChatProvider meetingId={data.id} meetingName={data.name} />
         </TabsContent>
       </Tabs>
     </div>

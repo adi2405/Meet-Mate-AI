@@ -141,3 +141,9 @@ export const meetings = pgTable("meetings", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
+
+export const processedMessages = pgTable("processed_messages", {
+  messageId: text("message_id").primaryKey(),
+  channelId: text("channel_id").notNull(),
+  processedAt: timestamp("processed_at").defaultNow().notNull(),
+});
