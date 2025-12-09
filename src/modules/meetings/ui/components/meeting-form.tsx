@@ -87,8 +87,6 @@ export const MeetingForm = ({
       },
       onError: (error) => {
         toast.error(error.message);
-
-        // TODO: Check if error code is "FORBIDDEN", redirect to "/upgrade"
       },
     })
   );
